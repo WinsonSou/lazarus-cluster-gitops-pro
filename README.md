@@ -14,8 +14,8 @@ Simply apply the following manifest to apply this to the cluster.
 > You will need to create your own sealed secrets to use this repo. the .sh files in the resources/workspaces/lazarus/cluster shows you how to create these sealed secrets.
 
 ```
-kubectl apply -f -  <<EOF
 #Add SealedSecrets HelmRepo
+kubectl apply -f -  <<EOF
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
@@ -47,6 +47,7 @@ spec:
   upgrade:
     crds: CreateReplace
 ---
+#Add Git Repo to point to Cluster GitOps Source
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
 metadata:
@@ -59,6 +60,7 @@ spec:
   timeout: 20s
   url: https://github.com/WinsonSou/lazarus-cluster-gitops-pro.git
 ---
+#Configure FluxCD kustomize
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
@@ -73,7 +75,5 @@ spec:
    name: lazarus-gitops
    namespace: kommander
 EOF
-
-
 ```
 
