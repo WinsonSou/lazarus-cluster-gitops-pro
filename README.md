@@ -6,9 +6,47 @@ The objective of this project is to provide guidance on using gitops to manage N
 
 Simply apply the following manifest to apply this to the cluster.
 > Note: Make changes to the workspacs, projects, rbac and clusters to be created as required
-> For clusters it is assumed that any secrets with PC credentials or Registry Credentials will be applied directly in the given workspace namespace of the Management Cluster. Sample secrets are provided within resources/workspaces/lazarus/cluster with yaml.example files
+
+> For clusters it is assumed that any secrets with PC credentials or Registry Credentials will be applied directly in the given workspace namespace of the Management Cluster. 
+
+> This repository uses sealed secrets. Find out more about sealed secrets at https://fluxcd.io/flux/guides/sealed-secrets/ and https://github.com/bitnami-labs/sealed-secrets
+
+> You will need to create your own sealed secrets to use this repo. the .sh files in the resources/workspaces/lazarus/cluster shows you how to create these sealed secrets.
+
 ```
 kubectl apply -f -  <<EOF
+#Add SealedSecrets HelmRepo
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: sealed-secrets
+  namespace: kommander
+spec:
+  interval: 1h0m0s
+  url: https://bitnami-labs.github.io/sealed-secrets
+---
+#Install SealedSecrets via HelmRelease
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: sealed-secrets
+  namespace: kommander
+spec:
+  chart:
+    spec:
+      chart: sealed-secrets
+      sourceRef:
+        kind: HelmRepository
+        name: sealed-secrets
+      version: ">=1.15.0-0"
+  interval: 1h0m0s
+  releaseName: sealed-secrets-controller
+  targetNamespace: kube-system
+  install:
+    crds: Create
+  upgrade:
+    crds: CreateReplace
+---
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
 metadata:

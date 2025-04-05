@@ -1,7 +1,8 @@
+cat << EOF > lazarus-workload-pc-credentials.yaml
 apiVersion: v1
 data:
   #base64 encoded json of: [{"type":"basic_auth","data":{"prismCentral":{"username":"nkp_prismCentral_service_account","password":"nkp_prismCentral_service_account_password"}}}]
-  credentials: #seeAboveForSecretFormat
+  credentials: W3sidHlwZSI6ImJhc2ljX2F1dGgiLCJkYXRhIjp7InByaXNtQ2VudHJhbCI6eyJ1c2VybmFtZSI6InRlc3QiLCJwYXNzd29yZCI6InRlc3QifX19XQo=
 kind: Secret
 metadata:
   labels:
@@ -9,3 +10,6 @@ metadata:
   name: lazarus-workload-pc-credentials
   namespace: lazarus-workspace
 type: Opaque
+EOF
+
+kubeseal --format yaml < lazarus-workload-pc-credentials.yaml > lazarus-workload-pc-credentials-sealed.yaml
