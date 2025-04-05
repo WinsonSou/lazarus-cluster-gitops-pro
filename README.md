@@ -50,6 +50,7 @@ graph TD
     class J resource
 ```
 
+```
 #Add SealedSecrets HelmRepo
 kubectl apply -f -  <<EOF
 apiVersion: source.toolkit.fluxcd.io/v1
