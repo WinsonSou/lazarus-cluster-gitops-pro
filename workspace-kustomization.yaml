@@ -1,0 +1,13 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: lazarus-workspace
+  namespace: kommander
+spec:
+  interval: 5s
+  path: ./kustomizations/workspaces
+  prune: true
+  sourceRef:
+   kind: GitRepository
+   name: lazarus-gitops
+   namespace: kommander
