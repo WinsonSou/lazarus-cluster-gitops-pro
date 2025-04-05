@@ -13,7 +13,43 @@ Simply apply the following manifest to apply this to the cluster.
 
 > You will need to create your own sealed secrets to use this repo. the .sh files in the resources/workspaces/lazarus/cluster shows you how to create these sealed secrets.
 
+## Repository Structure
+
+```mermaid
+graph TD
+    %% Main kustomization files
+    A[kustomization.yaml] --> B[workspace-kustomization.yaml]
+    A --> C[clusters-kustomization.yaml]
+    
+    %% Workspace kustomization path
+    B --> D[kustomizations/workspaces]
+    D --> E[resources/workspaces]
+    
+    %% Clusters kustomization path
+    C --> F[kustomizations/clusters]
+    F --> G[resources/workspaces/lazarus/cluster]
+    
+    %% Dependency relationship
+    C -.-> |dependsOn| B
+    
+    %% Workspace resources
+    E --> H[lazarus]
+    E --> I[phoenix]
+    
+    %% Lazarus workspace resources
+    H --> J[lazarus-workspace.yaml]
+    H --> G
+    
+    %% Styling
+    classDef kustomization fill:#f9f,stroke:#333,stroke-width:2px
+    classDef resource fill:#bbf,stroke:#333,stroke-width:1px
+    classDef directory fill:#dfd,stroke:#333,stroke-width:1px
+    
+    class A,B,C,D,F kustomization
+    class E,G,H,I directory
+    class J resource
 ```
+
 #Add SealedSecrets HelmRepo
 kubectl apply -f -  <<EOF
 apiVersion: source.toolkit.fluxcd.io/v1
@@ -75,5 +111,3 @@ spec:
    name: lazarus-gitops
    namespace: kommander
 EOF
-```
-
