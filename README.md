@@ -8,39 +8,88 @@ The objective of this project is to provide guidance on using gitops to manage N
 
 ```mermaid
 graph TD
-    %% Main kustomization files
-    A[kustomization.yaml] --> B[workspace-kustomization.yaml]
-    A --> C[clusters-kustomization.yaml]
+    %% Root directory
+    Root["/"] --> Kustomizations["kustomizations/"]
+    Root --> Resources["resources/"]
+    Root --> RootKustYaml["kustomization.yaml"]
+    Root --> WorkspaceKustYaml["workspace-kustomization.yaml"]
+    Root --> ClustersKustYaml["clusters-kustomization.yaml"]
     
-    %% Workspace kustomization path
-    B --> D[kustomizations/workspaces]
-    D --> E[resources/workspaces]
+    %% Root kustomization file references
+    RootKustYaml -- "resources:" --> WorkspaceKustYaml
+    RootKustYaml -- "resources:" --> ClustersKustYaml
     
-    %% Clusters kustomization path
-    C --> F[kustomizations/clusters]
-    F --> G[resources/workspaces/lazarus/cluster]
+    %% Kustomizations directory
+    Kustomizations --> KustWork["workspaces/"]
+    Kustomizations --> KustCluster["clusters/"]
     
-    %% Dependency relationship
-    C -.-> |dependsOn| B
+    %% Kustomization files in subdirectories
+    KustWork --> KWorkKustYaml["kustomization.yaml"]
+    KustCluster --> KClusterKustYaml["kustomization.yaml"]
     
-    %% Workspace resources
-    E --> H[lazarus]
-    E --> I[phoenix]
+    %% Resources directory
+    Resources --> ResWorkspaces["workspaces/"]
     
-    %% Lazarus workspace resources
-    H --> J[lazarus-workspace.yaml]
-    H --> G
+    %% Resources/workspaces directory
+    ResWorkspaces --> ResWorkKustYaml["kustomization.yaml"]
+    ResWorkspaces --> Lazarus["lazarus/"]
+    ResWorkspaces --> Phoenix["phoenix/"]
+    
+    %% Lazarus directory
+    Lazarus --> LazWorkspace["lazarus-workspace.yaml"]
+    Lazarus --> LazCluster["cluster/"]
+    
+    %% References from kustomization files to resources
+    KWorkKustYaml -- "resources:\n../../resources/workspaces" --> ResWorkspaces
+    KClusterKustYaml -- "resources:\n../../resources/workspaces/lazarus/cluster" --> LazCluster
+    
+    %% Flux Kustomization references
+    WorkspaceKustYaml -- "path: ./kustomizations/workspaces" --> KustWork
+    ClustersKustYaml -- "path: ./kustomizations/clusters" --> KustCluster
+    
+    %% Dependencies
+    ClustersKustYaml -. "dependsOn:\n- name: lazarus-workspace" .-> WorkspaceKustYaml
+    
+    %% Subgraph for legend
+    subgraph Legend
+        Dir["Directory"]
+        KustFile["Kustomization File"]
+        ResFile["Resource File"]
+        RefArrow["Reference"]
+        DepArrow["Dependency"]
+    end
     
     %% Styling
+    classDef directory fill:#dfd,stroke:#333,stroke-width:1px
     classDef kustomization fill:#f9f,stroke:#333,stroke-width:2px
     classDef resource fill:#bbf,stroke:#333,stroke-width:1px
-    classDef directory fill:#dfd,stroke:#333,stroke-width:1px
+    classDef reference stroke:#333,stroke-width:1px
+    classDef dependency stroke-dasharray: 5 5
     
-    class A,B,C,D,F kustomization
-    class E,G,H,I directory
-    class J resource
+    %% Assign classes
+    class Root,Kustomizations,Resources,KustWork,KustCluster,ResWorkspaces,Lazarus,Phoenix,LazCluster directory
+    class RootKustYaml,WorkspaceKustYaml,ClustersKustYaml,KWorkKustYaml,KClusterKustYaml,ResWorkKustYaml kustomization
+    class LazWorkspace resource
+    class Dir directory
+    class KustFile kustomization
+    class ResFile resource
+    class RefArrow reference
+    class DepArrow dependency
 ```
 
+The diagram above illustrates the relationships between files and directories in this GitOps repository:
+
+- **Pink boxes**: Kustomization files
+- **Green boxes**: Directories
+- **Blue boxes**: Resource files
+- **Solid arrows**: References between files (e.g., one file includes another)
+- **Dashed arrows**: Dependencies (e.g., one kustomization depends on another)
+
+The repository follows a layered approach:
+1. Root level kustomization.yaml points to workspace and clusters kustomizations
+2. Workspace kustomization sets up workspaces first
+3. Clusters kustomization depends on workspace kustomization
+4. Resources are organized by workspace
 
 Apply the following manifest to apply this to the Management Cluster.
 > Note: Make changes to the workspacs, projects, rbac and clusters to be created as required
