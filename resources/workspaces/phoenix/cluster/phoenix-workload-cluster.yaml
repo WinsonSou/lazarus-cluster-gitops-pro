@@ -9,7 +9,7 @@ metadata:
     topology.cluster.x-k8s.io/owned: ""
   name: phoenix-workload
   #namespace has to match the workspace namespace
-  namespace: lazarus-workspace
+  namespace: phoenix-workspace
 spec:
   clusterNetwork:
     pods:
@@ -54,7 +54,7 @@ spec:
                     allowExpansion: false
                     parameters:
                       csi.storage.k8s.io/fstype: ext4
-                      description: CSI StorageClass nutanix-volume for lazarus-workload
+                      description: CSI StorageClass nutanix-volume for phoenix-workload
                       hypervisorAttached: ENABLED
                       storageContainer: SelfServiceContainer
                       storageType: NutanixVolumes
