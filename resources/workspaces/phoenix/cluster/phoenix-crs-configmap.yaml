@@ -2,14 +2,14 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: phoenix-crs-configmap
-  namespace: phoenix-workspace
+  namespace: phoenix-workspace  
 data:
   git-repository.yaml: |
     apiVersion: source.toolkit.fluxcd.io/v1
     kind: GitRepository
     metadata:
       name: phoenix-gitops
-      namespace: kommander
+      namespace: phoenix-workspace
     spec:
       interval: 1m0s
       url: https://github.com/WinsonSou/lazarus-cluster-gitops-pro.git
@@ -20,7 +20,7 @@ data:
     kind: Kustomization
     metadata:
       name: phoenix-gitops
-      namespace: kommander
+      namespace: phoenix-workspace
     spec:
       interval: 10m0s
       path: ./resources/workspaces/phoenix/cluster/namespaces
