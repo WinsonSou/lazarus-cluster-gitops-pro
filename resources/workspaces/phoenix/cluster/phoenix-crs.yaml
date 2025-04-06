@@ -5,6 +5,7 @@ metadata:
   name: phoenix-crs
   namespace: phoenix-workspace
 spec:
+  strategy: Reconcile
   clusterSelector:
     matchLabels:
       konvoy.d2iq.io/cluster-name: phoenix-workload
