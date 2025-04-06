@@ -4,4 +4,7 @@ resources:
 - lazarus-workload-image-registry-mirror-credentials-sealed.yaml
 - lazarus-workload-pc-credentials-for-csi-sealed.yaml
 - lazarus-workload-pc-credentials-sealed.yaml
+- lazarus-crs-configmap.yaml
+- lazarus-crs.yaml
 - lazarus-workload-cluster.yaml
+

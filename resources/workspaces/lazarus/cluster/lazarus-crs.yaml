@@ -1,0 +1,14 @@
+---
+apiVersion: addons.cluster.x-k8s.io/v1beta1
+kind: ClusterResourceSet
+metadata:
+  name: lazarus-crs
+  namespace: lazarus-workspace
+spec:
+  strategy: Reconcile
+  clusterSelector:
+    matchLabels:
+      konvoy.d2iq.io/cluster-name: lazarus-workload
+  resources:
+    - kind: ConfigMap
+      name: lazarus-crs-configmap
