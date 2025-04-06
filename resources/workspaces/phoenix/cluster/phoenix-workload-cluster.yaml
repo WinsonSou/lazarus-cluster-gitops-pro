@@ -19,7 +19,7 @@ spec:
       cidrBlocks:
       - 10.96.0.0/12
   controlPlaneEndpoint:
-    host: "10.168.102.42"
+    host: "10.168.102.44"
     port: 6443
   topology:
     class: nkp-nutanix-v2.14.0
@@ -68,8 +68,8 @@ spec:
           serviceLoadBalancer:
             configuration:
               addressRanges:
-              - start: 10.168.102.43
-                end: 10.168.102.43
+              - start: 10.168.102.45
+                end: 10.168.102.45
             provider: MetalLB
         controlPlane:
           nutanix:
@@ -101,7 +101,7 @@ spec:
           url: https://registry.wskn.local/mirror
         nutanix:
           controlPlaneEndpoint:
-            host: 10.168.102.42
+            host: 10.168.102.44
             port: 6443
             virtualIP:
               provider: KubeVIP
