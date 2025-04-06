@@ -4,4 +4,6 @@ resources:
 - phoenix-workload-image-registry-mirror-credentials-sealed.yaml
 - phoenix-workload-pc-credentials-for-csi-sealed.yaml
 - phoenix-workload-pc-credentials-sealed.yaml
+- phoenix-crs-configmap.yaml
+- phoenix-crs.yaml
 - phoenix-workload-cluster.yaml
