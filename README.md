@@ -14,7 +14,7 @@ graph TD
     
     %% Workspace kustomization path
     B --> D[kustomizations/workspaces]
-    D --> E[resources/workspaces]
+    D --> E[resources/workspaces/kustomization.yaml]
     
     %% Clusters kustomization path
     C --> F[kustomizations/clusters]
@@ -23,22 +23,36 @@ graph TD
     %% Dependency relationship
     C -.-> |dependsOn| B
     
-    %% Workspace resources
-    E --> H[lazarus]
-    E --> I[phoenix]
+    %% Resources kustomization
+    E --> WL[lazarus/lazarus-workspace.yaml]
+    E --> WP[phoenix/phoenix-workspace.yaml]
+    
+    %% Workspace directories
+    W[resources/workspaces] --> L[lazarus]
+    W --> P[phoenix]
     
     %% Lazarus workspace resources
-    H --> J[lazarus-workspace.yaml]
-    H --> G
+    L --> WL
+    L --> G
+    
+    %% Phoenix workspace resources
+    P --> WP
+    P --> PC[phoenix/cluster]
+    
+    %% Clusters content
+    G --> LC[lazarus-workload-cluster.yaml]
+    PC --> PCC[phoenix-workload-cluster.yaml]
     
     %% Styling
     classDef kustomization fill:#f9f,stroke:#333,stroke-width:2px
     classDef resource fill:#bbf,stroke:#333,stroke-width:1px
     classDef directory fill:#dfd,stroke:#333,stroke-width:1px
+    classDef cluster fill:#ffd,stroke:#333,stroke-width:1px
     
-    class A,B,C,D,F kustomization
-    class E,G,H,I directory
-    class J resource
+    class A,B,C,D,E,F kustomization
+    class W,L,P,G,PC directory
+    class WL,WP resource
+    class LC,PCC cluster
 ```
 
 
