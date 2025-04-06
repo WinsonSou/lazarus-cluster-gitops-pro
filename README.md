@@ -61,7 +61,8 @@ Apply the following manifest to apply this to the Management Cluster.
 
 > For clusters it is assumed that any secrets with PC credentials or Registry Credentials will be applied directly in the given workspace namespace of the Management Cluster. 
 
-> This repository uses sealed secrets. Find out more about sealed secrets at https://fluxcd.io/flux/guides/sealed-secrets/ and https://github.com/bitnami-labs/sealed-secrets
+> This repository uses sealed secrets. Find out more about sealed secrets at https://fluxcd.io/flux/guides/sealed-secrets/ and https://github.com/bitnami-labs/sealed-secrets.
+> The SealedSecrets in use in this repo is cluster-wide scoped by passing in the --scope cluster-wide but you can use the default as well. Just be mindful of the namespace the sealed secrets are created in.
 
 > You will need to create your own sealed secrets to use this repo. the .sh files in the resources/workspaces/lazarus/cluster shows you how to create these sealed secrets.
 
