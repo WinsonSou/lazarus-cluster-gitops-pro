@@ -39,20 +39,32 @@ graph TD
     P --> WP
     P --> PC[phoenix/cluster]
     
-    %% Clusters content
+    %% Lazarus cluster resources
     G --> LC[lazarus-workload-cluster.yaml]
+    G --> LCRS[lazarus-crs.yaml]
+    G --> LCRSM[lazarus-crs-configmap.yaml]
+    
+    %% Phoenix cluster resources
     PC --> PCC[phoenix-workload-cluster.yaml]
+    PC --> PCRS[phoenix-crs.yaml]
+    PC --> PCRSM[phoenix-crs-configmap.yaml]
+    
+    %% ClusterResourceSet relationships
+    LCRS -.-> |references| LCRSM
+    PCRS -.-> |references| PCRSM
     
     %% Styling
     classDef kustomization fill:#f9f,stroke:#333,stroke-width:2px
     classDef resource fill:#bbf,stroke:#333,stroke-width:1px
     classDef directory fill:#dfd,stroke:#333,stroke-width:1px
     classDef cluster fill:#ffd,stroke:#333,stroke-width:1px
+    classDef crs fill:#fdb,stroke:#333,stroke-width:1px
     
     class A,B,C,D,E,F kustomization
     class W,L,P,G,PC directory
     class WL,WP resource
     class LC,PCC cluster
+    class LCRS,PCRS,LCRSM,PCRSM crs
 ```
 
 
