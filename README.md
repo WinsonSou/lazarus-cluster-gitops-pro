@@ -25,33 +25,31 @@ graph TD
     
     %% Resources kustomization
     E --> WL[lazarus/lazarus-workspace.yaml]
-    E --> WP[phoenix/phoenix-workspace.yaml]
     
     %% Workspace directories
     W[resources/workspaces] --> L[lazarus]
-    W --> P[phoenix]
     
     %% Lazarus workspace resources
     L --> WL
     L --> G
     
-    %% Phoenix workspace resources
-    P --> WP
-    P --> PC[phoenix/cluster]
-    
     %% Lazarus cluster resources
+    G --> GKU[kustomization.yaml]
     G --> LC[lazarus-workload-cluster.yaml]
     G --> LCRS[lazarus-crs.yaml]
     G --> LCRSM[lazarus-crs-configmap.yaml]
+    G --> N[namespaces]
+    G --> LCRSC[lazarus-workload-pc-credentials-sealed.yaml]
+    G --> LCRSCI[lazarus-workload-pc-credentials-for-csi-sealed.yaml]
+    G --> LCRMIR[lazarus-workload-image-registry-mirror-credentials-sealed.yaml]
     
-    %% Phoenix cluster resources
-    PC --> PCC[phoenix-workload-cluster.yaml]
-    PC --> PCRS[phoenix-crs.yaml]
-    PC --> PCRSM[phoenix-crs-configmap.yaml]
+    %% Namespace resources
+    N --> ND[dev-namespace.yaml]
+    N --> NP[prod-namespace.yaml]
+    N --> NKU[kustomization.yaml]
     
     %% ClusterResourceSet relationships
     LCRS -.-> |references| LCRSM
-    PCRS -.-> |references| PCRSM
     
     %% Styling
     classDef kustomization fill:#f9f,stroke:#333,stroke-width:2px
@@ -59,12 +57,15 @@ graph TD
     classDef directory fill:#dfd,stroke:#333,stroke-width:1px
     classDef cluster fill:#ffd,stroke:#333,stroke-width:1px
     classDef crs fill:#fdb,stroke:#333,stroke-width:1px
+    classDef namespace fill:#e7f,stroke:#333,stroke-width:1px
+    classDef secret fill:#faa,stroke:#333,stroke-width:1px
     
-    class A,B,C,D,E,F kustomization
-    class W,L,P,G,PC directory
-    class WL,WP resource
-    class LC,PCC cluster
-    class LCRS,PCRS,LCRSM,PCRSM crs
+    class A,B,C,D,E,F,GKU,NKU kustomization
+    class W,L,G,N directory
+    class WL,ND,NP resource
+    class LC cluster
+    class LCRS,LCRSM crs
+    class LCRSC,LCRSCI,LCRMIR secret
 ```
 
 
@@ -137,6 +138,6 @@ spec:
   prune: true
   sourceRef:
    kind: GitRepository
-   name: lazarus-gitops
+   name: lazarus-cluster-gitops
    namespace: kommander
 EOF
