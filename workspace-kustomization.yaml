@@ -3,11 +3,13 @@ kind: Kustomization
 metadata:
   name: lazarus-workspace
   namespace: kommander
+  annotations:
+    kustomize.toolkit.fluxcd.io/reconcile-order: "1"
 spec:
   interval: 5s
   path: ./kustomizations/workspaces
   prune: true
   sourceRef:
    kind: GitRepository
-   name: lazarus-gitops
+   name: lazarus-cluster-gitops
    namespace: kommander

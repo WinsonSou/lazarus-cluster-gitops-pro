@@ -116,7 +116,7 @@ spec:
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
 metadata:
-  name: lazarus-gitops
+  name: lazarus-cluster-gitops
   namespace: kommander
 spec:
   interval:  5s
@@ -129,7 +129,7 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: lazarus-gitops
+  name: lazarus-cluster-gitops
   namespace: kommander
 spec:
   interval: 5s
