@@ -12,4 +12,4 @@ metadata:
 type: Opaque
 EOF
 
-kubeseal --format yaml < lazarus-workload-pc-credentials.yaml > lazarus-workload-pc-credentials-sealed.yaml
+kubeseal --format yaml --scope cluster-wide < lazarus-workload-pc-credentials.yaml > lazarus-workload-pc-credentials-sealed.yaml

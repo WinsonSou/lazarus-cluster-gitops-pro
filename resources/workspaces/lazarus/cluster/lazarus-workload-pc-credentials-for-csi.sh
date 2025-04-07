@@ -11,4 +11,4 @@ metadata:
 type: Opaque
 EOF
 
-kubeseal --format yaml < lazarus-workload-pc-credentials-for-csi.yaml > lazarus-workload-pc-credentials-for-csi-sealed.yaml
+kubeseal --format yaml --scope cluster-wide < lazarus-workload-pc-credentials-for-csi.yaml > lazarus-workload-pc-credentials-for-csi-sealed.yaml

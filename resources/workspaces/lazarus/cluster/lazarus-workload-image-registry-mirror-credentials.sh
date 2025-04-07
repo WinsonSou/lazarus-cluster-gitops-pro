@@ -14,4 +14,4 @@ metadata:
 type: Opaque
 EOF
 
-kubeseal --format yaml < lazarus-workload-image-registry-mirror-credentials.yaml > lazarus-workload-image-registry-mirror-credentials-sealed.yaml
+kubeseal --format yaml --scope cluster-wide < lazarus-workload-image-registry-mirror-credentials.yaml > lazarus-workload-image-registry-mirror-credentials-sealed.yaml
