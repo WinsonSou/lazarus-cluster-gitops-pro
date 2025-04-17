@@ -9,7 +9,8 @@ spec:
   strategy: Reconcile
   clusterSelector:
     matchLabels:
-      konvoy.d2iq.io/cluster-name: lazarus-workload
+      #This has to match the actual cluster name.
+      konvoy.d2iq.io/cluster-name: lazarus
   resources:
     - kind: ConfigMap
       name: lazarus-crs-configmap
