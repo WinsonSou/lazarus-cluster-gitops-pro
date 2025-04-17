@@ -7,8 +7,8 @@ kind: Secret
 metadata:
   labels:
     cluster.x-k8s.io/provider: nutanix
-  name: lazarus-workload-pc-credentials
-  namespace: lazarus-workspace
+    konvoy.d2iq.io/cluster-name: lazarus
+    konvoy.d2iq.io/provider: nutanix
 type: Opaque
 EOF
 

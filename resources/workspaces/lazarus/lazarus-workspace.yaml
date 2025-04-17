@@ -1,13 +1,29 @@
----
 apiVersion: workspaces.kommander.mesosphere.io/v1alpha1
 kind: Workspace
 metadata:
-  name: lazarus-workspace
   annotations:
-    kommander.mesosphere.io/display-name: Lazarus Workspace
+    kommander.mesosphere.io/display-name: lazarus Workspace
     workspace.kommander.mesosphere.io/allow-existing-namespace: "true"
   labels:
-    caren.nutanix.com/namespace-sync: ""
     workspaces.kommander.mesosphere.io/can-use-global-infrastructure-provider: "true"
+    workspaces.kommander.mesosphere.io/gc-eligible: "true"
+  name: lazarus-p6tk9
 spec:
+  #clusterLabels:
+  #  workspaces.kommander.mesosphere.io/workspace-ref: e61845b1-987e-4cb7-b18d-2b2479f9e809
   namespaceName: lazarus-workspace
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  annotations:
+    kommander.mesosphere.io/display-name: lazarus Workspace
+  labels:
+    caren.nutanix.com/namespace-sync: "true"
+    kubernetes.io/metadata.name: lazarus-workspace
+    workspaces.kommander.mesosphere.io/workspace-name: lazarus-p6tk9
+  name: lazarus-workspace
+spec:
+  finalizers:
+  - kubernetes
+---

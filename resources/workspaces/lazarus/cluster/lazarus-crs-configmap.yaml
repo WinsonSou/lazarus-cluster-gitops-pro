@@ -1,9 +1,11 @@
+#THIS IS THE CONFIGMAP THAT IS APPLIED TO THE MANAGEMENT CLUSTER FOR CRS 
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: lazarus-crs-configmap
   namespace: lazarus-workspace  
 data:
+  #BELOW IS WHAT GETS PROPROGATED TO THE WORKLOAD CLUSTER
   git-repository.yaml: |
     apiVersion: source.toolkit.fluxcd.io/v1
     kind: GitRepository
