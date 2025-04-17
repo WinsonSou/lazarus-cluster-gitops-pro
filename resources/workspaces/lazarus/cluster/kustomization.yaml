@@ -1,6 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+- lazarus-workload-image-registry-credentials-sealed.yaml
 - lazarus-workload-image-registry-mirror-credentials-sealed.yaml
 - lazarus-workload-pc-credentials-for-csi-sealed.yaml
 - lazarus-workload-pc-credentials-sealed.yaml
